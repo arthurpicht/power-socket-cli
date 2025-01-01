@@ -1,0 +1,4 @@
+rootProject.name = 'power-socket-cli'
+
+includeBuild('../power-socket-api')
+

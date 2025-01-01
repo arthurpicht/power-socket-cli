@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+}
+
+group = 'de.arthurpicht'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url "https://raw.githubusercontent.com/arthurpicht/mvn-repo/main/releases"}
+}
+
+dependencies {
+    implementation 'de.arthurpicht:ap-power-socket-api:0.0.1-SNAPSHOT'
+    implementation 'de.arthurpicht:ap-utils-core:1.20.0'
+    implementation 'de.arthurpicht:ap-cli:0.1.4'
+    implementation 'de.arthurpicht:ap-console:0.4.4'
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.register('fatJar', Jar) {
+    archiveClassifier = 'fat'
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    manifest {
+        attributes 'Main-Class': 'de.arthurpicht.powerSocketCli.PowerSocketCli'
+        attributes 'Version': project.property("version")
+        attributes 'Build': new Date().format('yyyyMMddHHmmss')
+    }
+
+    from sourceSets.main.output
+
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}
+
+tasks.register('tool') {
+    dependsOn fatJar
+}
+
+defaultTasks 'tool'
