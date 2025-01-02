@@ -10,6 +10,8 @@ import de.arthurpicht.console.message.Level;
 import de.arthurpicht.powerSocketApi.IllegalOperationException;
 import de.arthurpicht.powerSocketApi.PowerSocketApiException;
 import de.arthurpicht.powerSocketCli.commands.GlobalOptionsDef;
+import de.arthurpicht.powerSocketCli.commands.OffDef;
+import de.arthurpicht.powerSocketCli.commands.OnDef;
 import de.arthurpicht.powerSocketCli.commands.StatusDef;
 import de.arthurpicht.utils.core.strings.Strings;
 
@@ -27,9 +29,11 @@ public class PowerSocketCli {
 
         commands.setDefaultCommand(new InfoDefaultCommand());
         commands.add(StatusDef.get());
+        commands.add(OnDef.get());
+        commands.add(OffDef.get());
 
         CliDescription cliDescription = new CliDescriptionBuilder()
-                .withDescription(EXEC_NAME + ". The power socket CLI.\nhttps://github.com/arthurpicht/power-socket-cli")
+                .withDescription(EXEC_NAME + ". The isPoweredOn socket CLI.\nhttps://github.com/arthurpicht/isPoweredOn-socket-cli")
                 .withVersionText("v0.0.1-SNAPSHOT")
                 .build(EXEC_NAME);
 

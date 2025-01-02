@@ -17,12 +17,12 @@ public class PowerSocketCliDemo {
             Status status = powerSocket.getStatus(deviceId);
 
             for (Status.OutletStatus outletStatus : status.outletStatusList()) {
-                System.out.println(outletStatus.outletName() + ": " + (outletStatus.power() ? "ON" : "OFF"));
+                System.out.println(outletStatus.outletName() + ": " + (outletStatus.isPoweredOn() ? "ON" : "OFF"));
             }
 
             String outletId = InfratecConsts.OutletId.OUTLET_1_1.name();
             Status.OutletStatus outletStatus = status.getOutletStatus(outletId);
-            if (outletStatus.power()) {
+            if (outletStatus.isPoweredOn()) {
                 System.out.println("Schalte " + outletId + " aus.");
                 powerSocket.switchOff(deviceId, outletId);
             } else {

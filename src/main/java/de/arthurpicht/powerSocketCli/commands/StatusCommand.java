@@ -20,7 +20,7 @@ public class StatusCommand implements CommandExecutor {
         try {
             Status status = powerSocket.getStatus(deviceId);
             for (Status.OutletStatus outletStatus : status.outletStatusList()) {
-                System.out.println(outletStatus.outletName() + ": " + (outletStatus.power() ? "ON" : "OFF"));
+                System.out.println("[" + outletStatus.outletId() + "][" + outletStatus.outletName() + "]: " + (outletStatus.isPoweredOn() ? "ON" : "OFF"));
             }
         } catch (PowerSocketApiException e) {
             System.out.println("Error: " + e.getMessage());
