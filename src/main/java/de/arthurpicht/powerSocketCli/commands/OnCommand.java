@@ -7,8 +7,7 @@ import de.arthurpicht.console.Console;
 import de.arthurpicht.powerSocketApi.IllegalOperationException;
 import de.arthurpicht.powerSocketApi.PowerSocket;
 import de.arthurpicht.powerSocketApi.PowerSocketApiException;
-import de.arthurpicht.powerSocketApi.Status;
-import de.arthurpicht.powerSocketApi.infratecPM8.InfratecConsts;
+import de.arthurpicht.powerSocketApi.common.OutletIds;
 import de.arthurpicht.powerSocketCli.PowerSocketFactory;
 import de.arthurpicht.utils.core.collection.Sets;
 
@@ -19,10 +18,11 @@ public class OnCommand implements CommandExecutor {
         PowerSocket powerSocket = PowerSocketFactory.create();
         String deviceId = Sets.getSomeElement(powerSocket.getDeviceIds());
         String outletId = cliCall.getParameterList().getFirst();
-        if (!InfratecConsts.OutletId.hasOutletId(outletId))
-            throw new CommandExecutorException("Unknown outletId");
 
         try {
+            OutletIds outletIds = powerSocket.getOutletIds(deviceId);
+            if (!outletIds.hasId(outletId))
+                throw new CommandExecutorException("Unknown outletId: [" + outletId + "].2");
             try {
                 powerSocket.switchOn(deviceId, outletId);
                 System.out.println("[OK] Outlet [" + outletId + "] is switched to on.");

@@ -4,7 +4,7 @@ import de.arthurpicht.powerSocketApi.IllegalOperationException;
 import de.arthurpicht.powerSocketApi.PowerSocket;
 import de.arthurpicht.powerSocketApi.PowerSocketApiException;
 import de.arthurpicht.powerSocketApi.Status;
-import de.arthurpicht.powerSocketApi.infratecPM8.InfratecConsts;
+import de.arthurpicht.powerSocketApi.infratecPM8.InfratecPM8OutletIds;
 import de.arthurpicht.utils.core.collection.Sets;
 
 public class PowerSocketCliDemo {
@@ -20,7 +20,7 @@ public class PowerSocketCliDemo {
                 System.out.println(outletStatus.outletName() + ": " + (outletStatus.isPoweredOn() ? "ON" : "OFF"));
             }
 
-            String outletId = InfratecConsts.OutletId.OUTLET_1_1.name();
+            String outletId = new InfratecPM8OutletIds().getIds().getFirst();
             Status.OutletStatus outletStatus = status.getOutletStatus(outletId);
             if (outletStatus.isPoweredOn()) {
                 System.out.println("Schalte " + outletId + " aus.");
